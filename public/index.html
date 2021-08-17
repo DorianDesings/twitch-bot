@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Bot</title>
+  </head>
+  <body>
+    <div id="chat" class="chat">
+      <!-- <div class="chat__message">
+        <span class="chat__user">Lokocr:</span>
+        <span class="chat__text"
+          >Buenas
+          <img
+            class="chat__emote"
+            src="https://static-cdn.jtvnw.net/emoticons/v1/303968822/1.0"
+          />
+        </span>
+      </div> -->
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const chat = document.getElementById('chat');
+      socket.on('message', msgContent => {
+        const chatMessage = document.createElement('div');
+        chatMessage.classList.add('chat__message');
+
+        const chatUser = document.createElement('span');
+        chatUser.classList.add('chat__user');
+        chatUser.textContent = msgContent.user;
+
+        const chatText = document.createElement('span');
+        chatText.classList.add('chat__text');
+        chatText.textContent = msgContent.message;
+
+        chatMessage.appendChild(chatUser);
+        chatMessage.appendChild(chatText);
+        chat.appendChild(chatMessage);
+
+        // const newMessage = document.createElement('p');
+        // newMessage.textContent = msg;
+        // chat.appendChild(newMessage);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
+  </body>
+</html>
