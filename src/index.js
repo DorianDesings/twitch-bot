@@ -45,9 +45,18 @@ client.connect();
 
 const filterRegexAt = /@/g;
 
+// const filterMessages = message => {
+//   const result = /(.*)(@DorianDesigns)(.*)/g.exec(message);
+//   return (
+//     result &&
+//     result.length &&
+//     ((result[2] && result[1]) || (result[2] && result[3]))
+//   );
+// };
+
 const filterMessages = message => {
   const result = /(.*)(@DorianDesigns)(.*)/g.exec(message);
-  return (
+  return !!(
     result &&
     result.length &&
     ((result[2] && result[1]) || (result[2] && result[3]))
