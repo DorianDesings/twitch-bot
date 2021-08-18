@@ -44,45 +44,28 @@ client.connect();
 // Filtro de mensajes con @
 
 const filterRegexAt = /@/g;
-
-// const filterMessages = message => {
-//   const result = /(.*)(@DorianDesigns)(.*)/g.exec(message);
-//   return (
-//     result &&
-//     result.length &&
-//     ((result[2] && result[1]) || (result[2] && result[3]))
-//   );
-// };
-
-const filterMessages = message => {
-  const result = /(.*)(@DorianDesigns)(.*)/g.exec(message);
-  return !!(
-    result &&
-    result.length &&
-    ((result[2] && result[1]) || (result[2] && result[3]))
-  );
-};
+const filterRegexDorian = /(.*@DorianDesings)|(@DorianDesings.*)/gi;
 
 client.on('message', (channel, ctx, message, self) => {
   if (
     self ||
     message.startsWith('!') ||
     ignoredUsers.includes(ctx['display-name']) ||
-    filterMessages(message)
+    (message.match(filterRegexAt) && !message.match(filterRegexDorian)) ||
+    ctx['emote-only']
   )
     return;
 
-  // Objeto con mensaje, emotes, suscriptor, mod
   const msgConfig = {
     user: ctx['display-name'],
     message: message,
     emotes: ctx.emotes,
     sub: ctx.subscriber,
-    mod: ctx.mod
+    mod: ctx.mod,
+    highlighted: ctx['msg-id'] === 'highlighted-message'
   };
-  // console.log(`${ctx['display-name']}: ${message}`);
   io.emit('message', msgConfig);
-  // console.log(ctx);
+  console.log(ctx);
 });
 
 // https://static-cdn.jtvnw.net/emoticons/v1/emotesv2_8c2887e0898547aabb83ffc71e8d1f71/1.0

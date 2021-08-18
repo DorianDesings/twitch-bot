@@ -8,25 +8,25 @@
     <title>Bot</title>
   </head>
   <body>
-    <div id="chat" class="chat">
-      <!-- <div class="chat__message">
-        <span class="chat__user">Lokocr:</span>
-        <span class="chat__text"
-          >Buenas
-          <img
-            class="chat__emote"
-            src="https://static-cdn.jtvnw.net/emoticons/v1/303968822/1.0"
-          />
-        </span>
-      </div> -->
-    </div>
+    <div id="chat" class="chat"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
       const chat = document.getElementById('chat');
+      let scrollChat = true;
+      chat.addEventListener('click', e => {
+        scrollChat = !scrollChat;
+        if (!scrollChat) {
+          e.target.classList.add('chat__message--blocked');
+        }
+      });
       socket.on('message', msgContent => {
         const chatMessage = document.createElement('div');
         chatMessage.classList.add('chat__message');
+        if (msgContent.mod) chatMessage.classList.add('chat__message--mod');
+        if (msgContent.sub) chatMessage.classList.add('chat__message--sub');
+        if (msgContent.highlighted)
+          chatMessage.classList.add('chat__message--highlighted');
 
         const chatUser = document.createElement('span');
         chatUser.classList.add('chat__user');
@@ -40,10 +40,9 @@
         chatMessage.appendChild(chatText);
         chat.appendChild(chatMessage);
 
-        // const newMessage = document.createElement('p');
-        // newMessage.textContent = msg;
-        // chat.appendChild(newMessage);
-        window.scrollTo(0, document.body.scrollHeight);
+        if (scrollChat) {
+          window.scrollTo(0, document.body.scrollHeight);
+        }
       });
     </script>
   </body>

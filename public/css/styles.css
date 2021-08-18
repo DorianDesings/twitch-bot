@@ -1,25 +1,46 @@
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
-  background-color: #333;
+  background-color: #111;
   color: aliceblue;
   font-family: sans-serif;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .chat {
-  width: 75vw;
+  width: 95vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .chat__message {
-  background-color: #444;
+  background-color: #222;
   display: flex;
-  /* align-items: center; */
-  line-height: 3;
-  padding: 0 1em;
+  line-height: 2;
+  padding: 1em 2em;
+  margin-bottom: 1em;
+}
+
+.chat__message--sub {
+  border: 2px solid cyan;
+}
+
+.chat__message--mod {
+  border: 2px solid orchid;
+}
+
+.chat__message--blocked {
+  border: 4px solid white;
+}
+
+.chat__message--highlighted {
+  filter: invert(1);
 }
 
 .chat__user {
-  color: red;
+  color: peru;
   margin-right: 1em;
 }
 
